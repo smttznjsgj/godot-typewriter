@@ -1,0 +1,6 @@
+方正少儿_GBK - 用于sans的汉化字体
+迷你简卡通 - 用于papyrus的汉化字体
+方正像素12 - 用于的像素字体（由Determination Mono+方正像素12整合）
+
+Logo/MonsterFriendBack.otf - 标题字体背景
+Logo/MonsterFriendFore.otf - 标题字体前景

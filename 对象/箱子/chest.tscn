@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://d4a6yd2eldlf7"]
+
+[ext_resource type="Script" uid="uid://cdu5265jy2mp7" path="res://对象/箱子/chest.gd" id="1_8uwsg"]
+[ext_resource type="Texture2D" uid="uid://dgrvir4pk5c7s" path="res://素材/spr_chestbox_0.png" id="2_bp1or"]
+[ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="2_trlyu"]
+[ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="3_x7mpe"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="4_61cda"]
+[ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="4_x7mpe"]
+[ext_resource type="AudioStream" uid="uid://ik13d4dmnxw4" path="res://素材/声音/snd_hurt1.wav" id="5_fur47"]
+[ext_resource type="Script" uid="uid://dsfm23hvgynuq" path="res://dialogue_script/effects_script/effect_shake.gd" id="8_5ti8o"]
+[ext_resource type="AudioStream" uid="uid://c4lw87i5sb44" path="res://素材/声音/snd_battlefall.wav" id="8_fur47"]
+[ext_resource type="Script" uid="uid://erbvo1gibc3o" path="res://dialogue_script/effects_script/effect_wobble.gd" id="9_b3eet"]
+[ext_resource type="AudioStream" uid="uid://b2w4lno0sicxg" path="res://素材/声音/snd_heal_c.wav" id="11_b3eet"]
+
+[sub_resource type="Resource" id="Resource_5ti8o"]
+script = ExtResource("8_5ti8o")
+effect_sound = ExtResource("5_fur47")
+metadata/_custom_type_script = "uid://dsfm23hvgynuq"
+
+[sub_resource type="Resource" id="Resource_b3eet"]
+script = ExtResource("9_b3eet")
+metadata/_custom_type_script = "uid://erbvo1gibc3o"
+
+[sub_resource type="Resource" id="Resource_trlyu"]
+script = ExtResource("2_trlyu")
+content = "*just a box.it is empty...{name},are you ok?"
+effect = Array[ExtResource("4_61cda")]([SubResource("Resource_5ti8o"), SubResource("Resource_b3eet")])
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_x7mpe"]
+script = ExtResource("2_trlyu")
+content = "*nothing is here! nullllllllllllllllllll"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_x6u83"]
+script = ExtResource("2_trlyu")
+content = "111111111111111111122222"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_bv3sb"]
+script = ExtResource("3_x7mpe")
+dialogue_list = Array[ExtResource("2_trlyu")]([SubResource("Resource_trlyu"), SubResource("Resource_x7mpe"), SubResource("Resource_x6u83")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_gvopx"]
+script = ExtResource("8_5ti8o")
+effect_sound = ExtResource("8_fur47")
+metadata/_custom_type_script = "uid://dsfm23hvgynuq"
+
+[sub_resource type="Resource" id="Resource_day8l"]
+script = ExtResource("2_trlyu")
+content = "*there is nothing.you already know .please just leave."
+effect = Array[ExtResource("4_61cda")]([SubResource("Resource_gvopx")])
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_cha58"]
+script = ExtResource("9_b3eet")
+effect_sound = ExtResource("11_b3eet")
+metadata/_custom_type_script = "uid://erbvo1gibc3o"
+
+[sub_resource type="Resource" id="Resource_v4ow6"]
+script = ExtResource("2_trlyu")
+content = "*Oh!The box hit you !"
+effect = Array[ExtResource("4_61cda")]([SubResource("Resource_cha58")])
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_t3ekh"]
+script = ExtResource("3_x7mpe")
+dialogue_list = Array[ExtResource("2_trlyu")]([SubResource("Resource_day8l"), SubResource("Resource_v4ow6")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
+size = Vector2(26, 26)
+
+[node name="Chest" type="StaticBody2D" unique_id=666820554]
+script = ExtResource("1_8uwsg")
+sprite = ExtResource("2_bp1or")
+first_open_dialogue = SubResource("Resource_bv3sb")
+empty_dialogue = SubResource("Resource_t3ekh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1979832529]
+texture_filter = 1
+texture = ExtResource("2_bp1or")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
+shape = SubResource("RectangleShape2D_trlyu")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1872116843]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1652434430]
+shape = SubResource("RectangleShape2D_x7mpe")

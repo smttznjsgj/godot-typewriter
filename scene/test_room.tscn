@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cjnsuqg5xl3uj"]
+
+[ext_resource type="PackedScene" uid="uid://ct4fqe3jg1yoh" path="res://player/player.tscn" id="1_ton2f"]
+[ext_resource type="PackedScene" uid="uid://d4a6yd2eldlf7" path="res://对象/箱子/chest.tscn" id="2_8gahd"]
+
+[node name="Node2D" type="Node2D" unique_id=1019973989]
+
+[node name="Player" parent="." unique_id=1997236098 instance=ExtResource("1_ton2f")]
+position = Vector2(346, 217)
+
+[node name="Chest" parent="." unique_id=666820554 instance=ExtResource("2_8gahd")]
+position = Vector2(487, 250)

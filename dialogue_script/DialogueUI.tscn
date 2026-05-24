@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://b6xwb5u6e2vll"]
+
+[ext_resource type="Script" uid="uid://c5pfse8y6x045" path="res://dialogue_script/dialogue_manager.gd" id="1_e78q0"]
+[ext_resource type="Resource" uid="uid://bayd3uyis8pdn" path="res://dialogues/dialogue_1.tres" id="2_lgx41"]
+[ext_resource type="Texture2D" uid="uid://cc86i26y1ivtk" path="res://icon.svg" id="3_yjy76"]
+
+[node name="DialogueUI" type="Control" unique_id=783907447 node_paths=PackedStringArray("character_name_text", "text_box", "left_avatar", "right_avatar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e78q0")
+character_name_text = NodePath("DialogueBox/Panel/MarginContainer/VBoxContainer/name")
+text_box = NodePath("DialogueBox/Panel/MarginContainer/VBoxContainer/content")
+left_avatar = NodePath("DialogueBox/leftavatar")
+right_avatar = NodePath("DialogueBox/rightavatar")
+main_dialogue = ExtResource("2_lgx41")
+
+[node name="DialogueBox" type="HBoxContainer" parent="." unique_id=1636331192]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -152.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="leftavatar" type="TextureRect" parent="DialogueBox" unique_id=1921320161]
+modulate = Color(1, 1, 0, 1)
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = ExtResource("3_yjy76")
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="DialogueBox" unique_id=158881218]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogueBox/Panel" unique_id=1189553909]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueBox/Panel/MarginContainer" unique_id=1678002181]
+layout_mode = 2
+
+[node name="name" type="Label" parent="DialogueBox/Panel/MarginContainer/VBoxContainer" unique_id=1473356824]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "name"
+
+[node name="content" type="Label" parent="DialogueBox/Panel/MarginContainer/VBoxContainer" unique_id=1549980341]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "AAAAAAAAAAAAA"
+autowrap_mode = 3
+
+[node name="rightavatar" type="TextureRect" parent="DialogueBox" unique_id=1329766007]
+modulate = Color(0, 1, 1, 1)
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = ExtResource("3_yjy76")
+stretch_mode = 5
+
+[node name="end_hint" type="Label" parent="." unique_id=173851883]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 854.0
+offset_top = 612.0
+offset_right = 894.0
+offset_bottom = 635.0
+text = "▼"
+
+[node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=397426411]
+
+[node name="ShakeAudio" type="AudioStreamPlayer" parent="." unique_id=1792572245]
+
+[connection signal="gui_input" from="DialogueBox/Panel/MarginContainer" to="." method="_on_click"]
