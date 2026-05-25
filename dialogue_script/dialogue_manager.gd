@@ -5,9 +5,13 @@ extends Control
 @export var text_box : Label
 @export var left_avatar: TextureRect
 @export var right_avatar : TextureRect
-@onready var end_hint: Label = $end_hint
+
 @onready var typing_audio: AudioStreamPlayer = $TypingAudio
-@onready var dialogue_box: HBoxContainer = $DialogueBox
+@onready var dialogue_box: HBoxContainer = $container/DialogueBox
+
+@onready var end_hint: Label = %end_hint
+@onready var container: Control = $container
+
 @onready var shake_audio: AudioStreamPlayer = $ShakeAudio
 
 
@@ -26,18 +30,32 @@ var typing_tween : Tween
 var dialogue_index : int = 0
 var blink_tween: Tween
 var effect_tween : Tween
-
+var persistent_effect_running: bool = false
 
 
 func display_next_dialogue() -> void:
 	end_hint.modulate.a = 0.0
-	#杀干净残留的tween
+	#杀干净残留的tween，守卫确保tween前后切干净，同时放行允许的presistent
 	if blink_tween and blink_tween.is_running():
 		blink_tween.kill()
-	if effect_tween and effect_tween.is_running():
+	if effect_tween and effect_tween.is_running() and not persistent_effect_running:
 		effect_tween.kill()
+		var settle = get_tree().create_tween()
+		persistent_effect_running = false
+		settle.set_ease(Tween.EASE_OUT)
+		settle.set_trans(Tween.TRANS_ELASTIC)
+		settle.tween_property(container, "position:x", 0.0, 0.5)
+		settle.parallel().tween_property(container, "position:y", 0.0, 0.5)
+		settle.parallel().tween_property(container, "rotation_degrees", 0.0, 0.5)
+		settle.tween_callback(display_next_dialogue)
+		return
 	#判断是否结束对话组
 	if dialogue_index >= len(main_dialogue.dialogue_list):
+		if effect_tween and effect_tween.is_running():
+			effect_tween.kill()
+		persistent_effect_running = false
+		container.position = Vector2.ZERO
+		container.rotation_degrees = 0.0
 		Global.can_act = true
 		visible = false
 		dialogue_finished.emit()
@@ -57,6 +75,9 @@ func display_next_dialogue() -> void:
 		blink_tween = get_tree().create_tween().set_loops()
 		blink_tween.tween_property(end_hint,"modulate:a",0.2,0.4)
 		blink_tween.tween_property(end_hint,"modulate:a",1.0,0.4)
+		if not persistent_effect_running and effect_tween and effect_tween.is_running():
+			dialogue_index += 1
+			return
 		dialogue_index += 1
 		return
 	else:
@@ -67,33 +88,45 @@ func display_next_dialogue() -> void:
 		
 		#打字机：
 		#判断是否有高级效果
+		if effect_tween and effect_tween.is_running() and not dialogue.effect.is_empty():
+			effect_tween.kill()
+			persistent_effect_running = false
+		#接下来上音效
+		if dialogue.effect_sound:
+			shake_audio.stream = dialogue.effect_sound
+			shake_audio.play()
+		
 		for ef in dialogue.effect:
-			var box = dialogue_box
+			var box = container
 			var ox = box.position.x
 			var oy = box.position.y
-			#接下来上音效
-			if ef.effect_sound:
-				shake_audio.stream = ef.effect_sound
-				shake_audio.play()
+			
+
 			#这里匹配状态机
 			if ef is ShakeEffect:
 				var sh = ef as ShakeEffect
 				effect_tween = get_tree().create_tween()
 				for i in sh.count:
-					var sign = 1 if i % 2 == 0 else -1
-					effect_tween.tween_property(box, "position:x", ox+sh.magnitude_x*sign,sh.speed)
-					effect_tween.tween_property(box, "position:y", oy+sh.magnitude_y*sign,sh.speed)
+					var shake_sign = 1 if i % 2 == 0 else -1
+					effect_tween.tween_property(box, "position:x", ox+sh.magnitude_x*shake_sign,sh.speed)
+					effect_tween.tween_property(box, "position:y", oy+sh.magnitude_y*shake_sign,sh.speed)
 				effect_tween.tween_property(box, "position:x", ox, sh.speed)
 				effect_tween.tween_property(box, "position:y", oy, sh.speed)
 					#抖动到此结束
 			elif ef is WobbleEffect:
 				var wo  = ef as WobbleEffect
+				persistent_effect_running = dialogue.persist_effects
+				container.pivot_offset = dialogue_box.position + dialogue_box.size / 2.0
 				effect_tween = get_tree().create_tween()
 				for i in wo.count:
-					var sign = 1 if i % 2 == 0 else -1
-					effect_tween.tween_property(box,"rotation_degrees",wo.rotation*sign,wo.speed)
-				effect_tween.tween_property(box,"rotation_degrees",0,wo.speed)
-					
+					var amplitude = wo.rotation * pow(wo.decay, i)
+					if amplitude < wo.snap_threshold:
+						break
+					var wob_sign = 1 if i % 2 == 0 else -1
+					effect_tween.tween_property(container, "rotation_degrees", amplitude * wob_sign, wo.speed) \
+					.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				effect_tween.tween_property(container, "rotation_degrees", 0.0, wo.speed) \
+				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 			
 			
 			
@@ -143,10 +176,17 @@ func _ready() -> void:
 	current_typing_sound = default_typing_sound
 	
 	
-func start_dialogue(group:DialogueGroup)-> void:
+func start_dialogue(group: DialogueGroup) -> void:
 	if typing_tween and typing_tween.is_running():
 		typing_tween.kill()
 	typing_tween = null
+	if effect_tween and effect_tween.is_running():
+		effect_tween.kill()
+	if blink_tween and blink_tween.is_running():
+		blink_tween.kill()
+	persistent_effect_running = false
+	container.position = Vector2.ZERO
+	container.rotation_degrees = 0.0
 	main_dialogue = group
 	dialogue_index = 0
 	visible = true

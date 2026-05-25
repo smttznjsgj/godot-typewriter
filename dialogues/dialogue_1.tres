@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="1_vtfg7"]
 [ext_resource type="Texture2D" uid="uid://cc86i26y1ivtk" path="res://icon.svg" id="2_eb70w"]
 [ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="3_to5ph"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="3_xwj14"]
 
 [sub_resource type="Resource" id="Resource_to5ph"]
 script = ExtResource("1_alwde")

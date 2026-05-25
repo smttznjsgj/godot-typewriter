@@ -1,4 +1,4 @@
-extends EffectData
+extends "res://dialogue_script/effects_script/effect_data.gd"
 class_name ShakeEffect
 
 @export var magnitude_x: float = 15.0
