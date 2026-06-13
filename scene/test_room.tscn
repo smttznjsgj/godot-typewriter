@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://cjnsuqg5xl3uj"]
 
 [ext_resource type="PackedScene" uid="uid://ct4fqe3jg1yoh" path="res://player/player.tscn" id="1_ton2f"]
-[ext_resource type="PackedScene" uid="uid://d4a6yd2eldlf7" path="res://对象/箱子/chest.tscn" id="2_8gahd"]
+[ext_resource type="PackedScene" uid="uid://duwmhj8ejc8pi" path="res://对象/NPC们/NPC1.tscn" id="2_8gahd"]
+[ext_resource type="PackedScene" uid="uid://dlio4u3yy4cq2" path="res://对象/箱子们/chest1.tscn" id="3_hhrv1"]
+[ext_resource type="PackedScene" uid="uid://b436ecifecyi4" path="res://对象/NPC们/npc2.tscn" id="4_hhrv1"]
 
 [node name="Node2D" type="Node2D" unique_id=1019973989]
 
 [node name="Player" parent="." unique_id=1997236098 instance=ExtResource("1_ton2f")]
 position = Vector2(346, 217)
+scale = Vector2(2, 2)
 
-[node name="Chest" parent="." unique_id=666820554 instance=ExtResource("2_8gahd")]
-position = Vector2(487, 250)
+[node name="Npc1" parent="." unique_id=152196526 instance=ExtResource("2_8gahd")]
+position = Vector2(607, 246)
+
+[node name="Chest1" parent="." unique_id=2011000374 instance=ExtResource("3_hhrv1")]
+position = Vector2(110, 83)
+scale = Vector2(2, 2)
+
+[node name="NPC" parent="." unique_id=666820554 instance=ExtResource("4_hhrv1")]
+position = Vector2(592, 144)

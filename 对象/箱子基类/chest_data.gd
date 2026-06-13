@@ -1,5 +1,5 @@
 extends StaticBody2D
-
+#简单的箱子用这个
 @export_group("Normal")
 @export var sprite : Texture
 @export var first_open_dialogue : DialogueGroup

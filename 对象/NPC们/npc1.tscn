@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://duwmhj8ejc8pi"]
+
+[ext_resource type="Script" uid="uid://d24bf4ewmqmpg" path="res://对象/NPC基类/npc_data.gd" id="1_exika"]
+[ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="2_rbiw1"]
+[ext_resource type="Texture2D" uid="uid://dgrvir4pk5c7s" path="res://素材/spr_chestbox_0.png" id="3_fdjr1"]
+[ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="3_q0rlh"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="4_ecgyl"]
+[ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="5_6rquv"]
+
+[sub_resource type="Resource" id="Resource_psmef"]
+script = ExtResource("3_q0rlh")
+content = "箱子11111111111111111"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_5mv5g"]
+script = ExtResource("2_rbiw1")
+id = "a"
+next_id = "b"
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_psmef")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_x2bse"]
+script = ExtResource("3_q0rlh")
+content = "箱子22222222222222222"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_rrbgw"]
+script = ExtResource("2_rbiw1")
+id = "b"
+next_id = "c"
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_x2bse")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_87u0l"]
+script = ExtResource("3_q0rlh")
+content = "箱子33333333333333"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_yot45"]
+script = ExtResource("2_rbiw1")
+id = "c"
+next_id = "a"
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_87u0l")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
+size = Vector2(20, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
+size = Vector2(30, 32)
+
+[node name="NPC" type="StaticBody2D" unique_id=666820554]
+scale = Vector2(2, 2)
+script = ExtResource("1_exika")
+dialogue_groups = Array[ExtResource("2_rbiw1")]([SubResource("Resource_5mv5g"), SubResource("Resource_rrbgw"), SubResource("Resource_yot45")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1979832529]
+texture_filter = 1
+texture = ExtResource("3_fdjr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
+scale = Vector2(1.1154813, 0.6640347)
+shape = SubResource("RectangleShape2D_trlyu")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1872116843]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1652434430]
+shape = SubResource("RectangleShape2D_x7mpe")

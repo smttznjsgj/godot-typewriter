@@ -1,9 +1,9 @@
-extends "res://dialogue_script/effects_script/effect_data.gd"
+extends EffectData
 class_name WobbleEffect
 
 ## 单轮最大旋转角度
 @export_range(0.1, 720.0, 0.5) var rotation: float = 5.0
-## 摇晃次数，和decay并用的时候有冲突，写的时候所以往大了写，比如我想摇晃10次，衰减系数是0.3，就写18或者20.反正你能懂我意思！
+## 摇晃次数，为2的时候是一个来回，所以，最好填奇数，不然复位的时候是反过来的，效果看着没力气。和decay并用的时候有冲突，写的时候所以往大了写，比如我想摇晃10次，衰减系数是0.3，就写18或者20.反正你能懂我意思！
 @export_range(1, 100, 1) var count: int = 3
 ## 越小越快
 @export_range(0.01, 100.0, 0.01) var speed: float = 0.3
@@ -11,3 +11,5 @@ class_name WobbleEffect
 @export_range(0.0, 1.0, 0.01) var decay: float = 0.5
 ## 当前幅度小于此值直接截断，避免微可见的抽搐。按死了几乎不可见的tween动画
 @export_range(0.0, 5.0, 0.05) var snap_threshold: float = 0.5
+## 自然结束时是否猛然归位。true=从峰值弹射归位有阻尼回弹，false=平缓减速归位
+@export var fierce_return: bool = false

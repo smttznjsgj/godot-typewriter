@@ -32,16 +32,15 @@ var blink_tween: Tween
 var effect_tween : Tween
 var persistent_effect_running: bool = false
 
-
 func display_next_dialogue() -> void:
 	end_hint.modulate.a = 0.0
-	#杀干净残留的tween，守卫确保tween前后切干净，同时放行允许的presistent
 	if blink_tween and blink_tween.is_running():
 		blink_tween.kill()
+	
 	if effect_tween and effect_tween.is_running() and not persistent_effect_running:
 		effect_tween.kill()
-		var settle = get_tree().create_tween()
 		persistent_effect_running = false
+		var settle = get_tree().create_tween()
 		settle.set_ease(Tween.EASE_OUT)
 		settle.set_trans(Tween.TRANS_ELASTIC)
 		settle.tween_property(container, "position:x", 0.0, 0.5)
@@ -49,7 +48,7 @@ func display_next_dialogue() -> void:
 		settle.parallel().tween_property(container, "rotation_degrees", 0.0, 0.5)
 		settle.tween_callback(display_next_dialogue)
 		return
-	#判断是否结束对话组
+	
 	if dialogue_index >= len(main_dialogue.dialogue_list):
 		if effect_tween and effect_tween.is_running():
 			effect_tween.kill()
@@ -58,23 +57,22 @@ func display_next_dialogue() -> void:
 		container.rotation_degrees = 0.0
 		Global.can_act = true
 		visible = false
+		Global.dialogue_broadcast.emit(main_dialogue.next_id)
 		dialogue_finished.emit()
 		return
 	
 	var dialogue := main_dialogue.dialogue_list[dialogue_index]
-	var processed_content = dialogue.content.replace("{name}",Global.player.player_name)
-	#加个冒号就相当与把这个dialogue定义为了一个局部类，后面就可以引用了？
+	var processed_content = dialogue.content.replace("{name}", Global.player.player_name)
 	
 	if typing_tween and typing_tween.is_running():
 		var dead_tween = typing_tween
 		typing_tween = null
 		dead_tween.kill()
 		text_box.text = processed_content
-		#对话结束后的小光标
 		end_hint.modulate.a = 1.0
 		blink_tween = get_tree().create_tween().set_loops()
-		blink_tween.tween_property(end_hint,"modulate:a",0.2,0.4)
-		blink_tween.tween_property(end_hint,"modulate:a",1.0,0.4)
+		blink_tween.tween_property(end_hint, "modulate:a", 0.2, 0.4)
+		blink_tween.tween_property(end_hint, "modulate:a", 1.0, 0.4)
 		if not persistent_effect_running and effect_tween and effect_tween.is_running():
 			dialogue_index += 1
 			return
@@ -83,15 +81,11 @@ func display_next_dialogue() -> void:
 	else:
 		character_name_text.text = dialogue.character_name
 		current_typing_sound = dialogue.typing_sound if dialogue.typing_sound else default_typing_sound
-		#text_box.text = dialogue.content   
-		#如果不用打字机的话，这一行就可以不注释掉，但是我们要用打字机来显示这个文本，所以我们来把这个注释掉吧！！
 		
-		#打字机：
-		#判断是否有高级效果
 		if effect_tween and effect_tween.is_running() and not dialogue.effect.is_empty():
 			effect_tween.kill()
 			persistent_effect_running = false
-		#接下来上音效
+		
 		if dialogue.effect_sound:
 			shake_audio.stream = dialogue.effect_sound
 			shake_audio.play()
@@ -101,20 +95,17 @@ func display_next_dialogue() -> void:
 			var ox = box.position.x
 			var oy = box.position.y
 			
-
-			#这里匹配状态机
 			if ef is ShakeEffect:
 				var sh = ef as ShakeEffect
 				effect_tween = get_tree().create_tween()
 				for i in sh.count:
 					var shake_sign = 1 if i % 2 == 0 else -1
-					effect_tween.tween_property(box, "position:x", ox+sh.magnitude_x*shake_sign,sh.speed)
-					effect_tween.tween_property(box, "position:y", oy+sh.magnitude_y*shake_sign,sh.speed)
+					effect_tween.tween_property(box, "position:x", ox + sh.magnitude_x * shake_sign, sh.speed)
+					effect_tween.tween_property(box, "position:y", oy + sh.magnitude_y * shake_sign, sh.speed)
 				effect_tween.tween_property(box, "position:x", ox, sh.speed)
 				effect_tween.tween_property(box, "position:y", oy, sh.speed)
-					#抖动到此结束
 			elif ef is WobbleEffect:
-				var wo  = ef as WobbleEffect
+				var wo = ef as WobbleEffect
 				persistent_effect_running = dialogue.persist_effects
 				container.pivot_offset = dialogue_box.position + dialogue_box.size / 2.0
 				effect_tween = get_tree().create_tween()
@@ -124,37 +115,44 @@ func display_next_dialogue() -> void:
 						break
 					var wob_sign = 1 if i % 2 == 0 else -1
 					effect_tween.tween_property(container, "rotation_degrees", amplitude * wob_sign, wo.speed) \
-					.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-				effect_tween.tween_property(container, "rotation_degrees", 0.0, wo.speed) \
-				.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-			
-			
-			
+						.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				effect_tween.tween_callback(func():
+					if wo.fierce_return:
+						var st = get_tree().create_tween()
+						st.set_ease(Tween.EASE_OUT)
+						st.set_trans(Tween.TRANS_ELASTIC)
+						st.tween_property(container, "position:x", 0.0, 0.5)
+						st.parallel().tween_property(container, "position:y", 0.0, 0.5)
+						st.parallel().tween_property(container, "rotation_degrees", 0.0, 0.5)
+					else:
+						var st = get_tree().create_tween()
+						st.set_ease(Tween.EASE_OUT)
+						st.set_trans(Tween.TRANS_SINE)
+						st.tween_property(container, "rotation_degrees", 0.0, wo.speed * 1.5)
+				)
+		
 		typing_tween = get_tree().create_tween()
 		text_box.text = ""
-		text_box.add_theme_color_override("font_color",dialogue.text_color)
-		text_box.add_theme_font_override("font",dialogue.text_font)
+		text_box.add_theme_color_override("font_color", dialogue.text_color)
+		text_box.add_theme_font_override("font", dialogue.text_font)
 		for character in processed_content:
-			typing_tween.tween_callback(append_character.bind(character)).set_delay(dialogue.typing_speed)#这里的.bind，是因为callback函数调用的括号里面的函数不能直接加括号，所以加上一个.bind来兼容一下？
+			typing_tween.tween_callback(append_character.bind(character)).set_delay(dialogue.typing_speed)
 			if character in [".", "!", "?", "。", "！", "？"]:
 				typing_tween.tween_interval(0.4)
 			elif character in [",", "，", ";", "；", ":", "："]:
 				typing_tween.tween_interval(0.15)
-		typing_tween.tween_callback(
-			func(): #这里使用了匿名函数的调用，因为callback只能喊一个函数名，但是我们需要只有这一个句子，所以我们就把他给扣上一个匿名函数的帽子
+		typing_tween.tween_callback(func():
 			dialogue_index += 1
-			
 			end_hint.modulate.a = 1.0
 			blink_tween = get_tree().create_tween().set_loops()
-			blink_tween.tween_property(end_hint,"modulate:a",0.2,0.4)
-			blink_tween.tween_property(end_hint,"modulate:a",1.0,0.4)
-			
-			)
-			
+			blink_tween.tween_property(end_hint, "modulate:a", 0.2, 0.4)
+			blink_tween.tween_property(end_hint, "modulate:a", 1.0, 0.4)
+		)
+		
 		if dialogue.show_on_left:
 			left_avatar.texture = dialogue.avatar
-			right_avatar.texture = null#材质设置为null，相当于不显示
-		else :
+			right_avatar.texture = null
+		else:
 			right_avatar.texture = dialogue.avatar
 			left_avatar.texture = null
 			

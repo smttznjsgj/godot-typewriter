@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="手搓自研打字机"
+config/name="手搓自研打字机 （现在这个是主力军）6月13日晚上已完成对接插口"
 run/main_scene="uid://cjnsuqg5xl3uj"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -22,6 +22,10 @@ MCPInputService="*res://addons/godot_mcp/mcp_input_service.gd"
 MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"
 DialogueUI="*uid://b6xwb5u6e2vll"
 Global="*uid://ckh6730jdqbqm"
+
+[display]
+
+window/size/always_on_top=true
 
 [editor_plugins]
 

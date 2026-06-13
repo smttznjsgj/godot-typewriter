@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="DialogueGroup" format=3 uid="uid://fnbjcv0qxpov"]
+
+[ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="1_egeqb"]
+[ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="2_4lvnq"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="2_if44x"]
+[ext_resource type="Script" uid="uid://erbvo1gibc3o" path="res://dialogue_script/effects_script/effect_wobble.gd" id="4_8mfn2"]
+[ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="6_bp65g"]
+
+[sub_resource type="Resource" id="Resource_aybka"]
+script = ExtResource("4_8mfn2")
+rotation = 14.1
+count = 1
+decay = 1.0
+snap_threshold = 0.0
+fierce_return = true
+metadata/_custom_type_script = "uid://erbvo1gibc3o"
+
+[sub_resource type="Resource" id="Resource_i4uf4"]
+script = ExtResource("1_egeqb")
+content = "*把他们叠加到一块，你感觉怎么样？"
+effect = Array[ExtResource("2_if44x")]([SubResource("Resource_aybka")])
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_if44x"]
+script = ExtResource("4_8mfn2")
+rotation = 21.1
+count = 9
+decay = 1.0
+fierce_return = true
+metadata/_custom_type_script = "uid://erbvo1gibc3o"
+
+[sub_resource type="Resource" id="Resource_qo7nl"]
+script = ExtResource("1_egeqb")
+content = "*啥？我说的不够快？等我一下。111111"
+effect = Array[ExtResource("2_if44x")]([SubResource("Resource_if44x")])
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[resource]
+script = ExtResource("6_bp65g")
+dialogue_list = Array[ExtResource("1_egeqb")]([SubResource("Resource_i4uf4"), SubResource("Resource_qo7nl")])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
