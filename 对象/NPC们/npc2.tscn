@@ -14,9 +14,9 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_t7acw"]
 script = ExtResource("2_iywpx")
+dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_a0ya7")])
 id = "a"
 next_id = "b"
-dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_a0ya7")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="Resource" id="Resource_u6dnn"]
@@ -26,9 +26,9 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_0be44"]
 script = ExtResource("2_iywpx")
+dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_u6dnn")])
 id = "b"
 next_id = "c"
-dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_u6dnn")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="Resource" id="Resource_safpf"]
@@ -38,16 +38,16 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_aj0fv"]
 script = ExtResource("2_iywpx")
+dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_safpf")])
 id = "c"
 next_id = "a"
-dialogue_list = Array[ExtResource("3_wm2pi")]([SubResource("Resource_safpf")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
-size = Vector2(25.101274, 76.803215)
+size = Vector2(25.101274, 38.40161)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
-size = Vector2(30, 27)
+size = Vector2(30, 52.5)
 
 [node name="NPC" type="StaticBody2D" unique_id=666820554]
 scale = Vector2(2, 2)
@@ -59,12 +59,12 @@ texture_filter = 1
 texture = ExtResource("2_n2s4b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
-position = Vector2(4.7683716e-07, -0.50000143)
+position = Vector2(4.7683716e-07, -13.25)
 scale = Vector2(1.1154813, 0.6640347)
 shape = SubResource("RectangleShape2D_trlyu")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1872116843]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1652434430]
-position = Vector2(0, -12.5)
+position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_x7mpe")

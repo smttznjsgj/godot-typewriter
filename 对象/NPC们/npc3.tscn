@@ -1,22 +1,24 @@
-[gd_scene format=3 uid="uid://cfbimc6dmf6am"]
+[gd_scene format=3 uid="uid://o7hhieffmau4"]
 
-[ext_resource type="Script" uid="uid://d24bf4ewmqmpg" path="res://对象/NPC基类/npc_data.gd" id="1_ki11f"]
+[ext_resource type="Script" uid="uid://d24bf4ewmqmpg" path="res://对象/NPC基类/npc_data.gd" id="1_5pc0t"]
+[ext_resource type="Texture2D" uid="uid://cc86i26y1ivtk" path="res://icon.svg" id="2_5pc0t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
-size = Vector2(26.894222, 45.17836)
+size = Vector2(16.136534, 27.107016)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
-size = Vector2(24, 16)
+size = Vector2(18, 20)
 
 [node name="NPC" type="StaticBody2D" unique_id=666820554]
-script = ExtResource("1_ki11f")
+script = ExtResource("1_5pc0t")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1979832529]
 texture_filter = 1
 scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_5pc0t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
-position = Vector2(0, -2.3841858e-07)
+position = Vector2(-2.3841858e-07, 3.5762787e-07)
 scale = Vector2(1.1154813, 0.6640347)
 shape = SubResource("RectangleShape2D_trlyu")
 

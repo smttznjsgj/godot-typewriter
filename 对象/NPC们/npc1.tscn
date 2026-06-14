@@ -14,9 +14,9 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_5mv5g"]
 script = ExtResource("2_rbiw1")
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_psmef")])
 id = "a"
 next_id = "b"
-dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_psmef")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="Resource" id="Resource_x2bse"]
@@ -26,9 +26,9 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_rrbgw"]
 script = ExtResource("2_rbiw1")
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_x2bse")])
 id = "b"
 next_id = "c"
-dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_x2bse")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="Resource" id="Resource_87u0l"]
@@ -38,9 +38,9 @@ metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_yot45"]
 script = ExtResource("2_rbiw1")
+dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_87u0l")])
 id = "c"
 next_id = "a"
-dialogue_list = Array[ExtResource("3_q0rlh")]([SubResource("Resource_87u0l")])
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]

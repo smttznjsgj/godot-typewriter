@@ -5,5 +5,17 @@ var player : PlayerData
 
 signal dialogue_broadcast(next_id: String)
 
+var flags: Dictionary = {}
+
 func _ready() -> void:
 	player = preload("res://player/player_data.tres")
+
+func set_flag(flag_name: String) -> void:
+	if flag_name != "":
+		flags[flag_name] = true
+		print("Flag set: ", flag_name)
+
+func has_flag(flag_name: String) -> bool:
+	if flag_name == "":
+		return true
+	return flags.get(flag_name, false)

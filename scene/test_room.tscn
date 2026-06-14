@@ -1,9 +1,159 @@
 [gd_scene format=3 uid="uid://cjnsuqg5xl3uj"]
 
 [ext_resource type="PackedScene" uid="uid://ct4fqe3jg1yoh" path="res://player/player.tscn" id="1_ton2f"]
-[ext_resource type="PackedScene" uid="uid://duwmhj8ejc8pi" path="res://对象/NPC们/NPC1.tscn" id="2_8gahd"]
-[ext_resource type="PackedScene" uid="uid://dlio4u3yy4cq2" path="res://对象/箱子们/chest1.tscn" id="3_hhrv1"]
+[ext_resource type="PackedScene" uid="uid://duwmhj8ejc8pi" path="res://对象/NPC们/npc1.tscn" id="2_8gahd"]
+[ext_resource type="PackedScene" uid="uid://o7hhieffmau4" path="res://对象/NPC们/npc3.tscn" id="3_hhrv1"]
 [ext_resource type="PackedScene" uid="uid://b436ecifecyi4" path="res://对象/NPC们/npc2.tscn" id="4_hhrv1"]
+[ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="4_xg7ot"]
+[ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="5_j4i0s"]
+[ext_resource type="Texture2D" uid="uid://dgrvir4pk5c7s" path="res://素材/spr_chestbox_0.png" id="6_j4i0s"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="6_sbee0"]
+[ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="7_eel6g"]
+
+[sub_resource type="Resource" id="Resource_886wu"]
+script = ExtResource("5_j4i0s")
+content = "*你好，我是一号戈多，他是二号戈多！"
+avatar = ExtResource("6_j4i0s")
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_jl3h3"]
+script = ExtResource("5_j4i0s")
+content = "*我的朋友就在旁边，和他打个招呼吧！"
+avatar = ExtResource("6_j4i0s")
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_vcrkc"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_886wu"), SubResource("Resource_jl3h3")])
+id = "A1"
+next_id = "A2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_sbee0"]
+script = ExtResource("5_j4i0s")
+content = "*他就在旁边，和他打个招呼吧，好心的陌生人！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_eel6g"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_sbee0")])
+id = "A2"
+next_id = "A2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_f40vf"]
+script = ExtResource("5_j4i0s")
+content = "*谢谢你和我聊天，我伤心的时候，二号戈多也不开心。"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_pt8ia"]
+script = ExtResource("5_j4i0s")
+content = "*现在我们三个是朋友了！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_wswju"]
+script = ExtResource("5_j4i0s")
+content = "*我们就在这里，欢迎随时来找我们！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_g1cbb"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_f40vf"), SubResource("Resource_pt8ia"), SubResource("Resource_wswju")])
+id = "A3"
+next_id = "A4"
+set_flag = "be friend1"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_6naqk"]
+script = ExtResource("5_j4i0s")
+content = "*有什么我能帮得上忙的吗，{name}?"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_8ajjh"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_6naqk")])
+id = "A4"
+require_flag = "be friend1,be friend2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_lnbcs"]
+script = ExtResource("5_j4i0s")
+content = "*你好！我是二号戈多。"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_04roy"]
+script = ExtResource("5_j4i0s")
+content = "*我是一号戈多的朋友！和他打个招呼吧！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_8s16s"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_lnbcs"), SubResource("Resource_04roy")])
+id = "1"
+next_id = "2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_1cgs4"]
+script = ExtResource("5_j4i0s")
+content = "*一号戈多最近有点不开心。如果有陌生人能和他说说话的话，他会很高兴！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_ear1o"]
+script = ExtResource("5_j4i0s")
+content = "*他很喜欢和陌生人聊天的！希望一切都好！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_fol8s"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_1cgs4"), SubResource("Resource_ear1o")])
+id = "2"
+next_id = "A3"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_dlmox"]
+script = ExtResource("5_j4i0s")
+content = "*那么，你和他打过招呼了？...啊！太好了！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_bnjh2"]
+script = ExtResource("5_j4i0s")
+content = "*他的心情会好很多的！..他就是这样，只是想和人聊聊天。"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_dif85"]
+script = ExtResource("5_j4i0s")
+content = "*现在我们是朋友了！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_ahicj"]
+script = ExtResource("5_j4i0s")
+content = "*谢谢你和他聊天！祝你有愉快的一天！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_x1ppu"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_dlmox"), SubResource("Resource_bnjh2"), SubResource("Resource_dif85"), SubResource("Resource_ahicj")])
+id = "A3"
+next_id = "A4"
+set_flag = "be friend2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_j4i0s"]
+script = ExtResource("5_j4i0s")
+content = "*现在我们是朋友了！你是二号戈多的朋友。"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_i0bon"]
+script = ExtResource("5_j4i0s")
+content = "*有什么事尽管找我，我和一号戈多会尽可能帮忙的！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_b83ri"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_j4i0s"), SubResource("Resource_i0bon")])
+id = "A4"
+require_flag = "be friend1,be friend2"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [node name="Node2D" type="Node2D" unique_id=1019973989]
 
@@ -11,12 +161,18 @@
 position = Vector2(346, 217)
 scale = Vector2(2, 2)
 
-[node name="Npc1" parent="." unique_id=152196526 instance=ExtResource("2_8gahd")]
-position = Vector2(607, 246)
+[node name="箱子1" parent="." unique_id=152196526 instance=ExtResource("2_8gahd")]
+position = Vector2(511, 135)
 
-[node name="Chest1" parent="." unique_id=2011000374 instance=ExtResource("3_hhrv1")]
-position = Vector2(110, 83)
+[node name="godot1" parent="." unique_id=666820554 instance=ExtResource("3_hhrv1")]
+position = Vector2(328, 139)
 scale = Vector2(2, 2)
+dialogue_groups = Array[ExtResource("4_xg7ot")]([SubResource("Resource_vcrkc"), SubResource("Resource_eel6g"), SubResource("Resource_g1cbb"), SubResource("Resource_8ajjh")])
 
-[node name="NPC" parent="." unique_id=666820554 instance=ExtResource("4_hhrv1")]
-position = Vector2(592, 144)
+[node name="godot2" parent="." unique_id=794792939 instance=ExtResource("3_hhrv1")]
+position = Vector2(380, 140)
+scale = Vector2(2, 2)
+dialogue_groups = Array[ExtResource("4_xg7ot")]([SubResource("Resource_8s16s"), SubResource("Resource_fol8s"), SubResource("Resource_x1ppu"), SubResource("Resource_b83ri")])
+
+[node name="冰箱" parent="." unique_id=1446510662 instance=ExtResource("4_hhrv1")]
+position = Vector2(442, 109)

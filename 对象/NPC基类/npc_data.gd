@@ -42,5 +42,13 @@ func _on_broadcast(next_id: String) -> void:
 	if next_id == "":
 		return
 	var group := _find_group(next_id)
-	if group:
+	if group and _check_flags(group.require_flag):
 		current_group_id = next_id
+		
+func _check_flags(flag_str: String) -> bool:
+	if flag_str == "":
+		return true
+	for f in flag_str.split(","):
+		if not Global.has_flag(f.strip_edges()):
+			return false
+	return true

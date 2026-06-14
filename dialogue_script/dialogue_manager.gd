@@ -57,6 +57,7 @@ func display_next_dialogue() -> void:
 		container.rotation_degrees = 0.0
 		Global.can_act = true
 		visible = false
+		Global.set_flag(main_dialogue.set_flag)
 		Global.dialogue_broadcast.emit(main_dialogue.next_id)
 		dialogue_finished.emit()
 		return
