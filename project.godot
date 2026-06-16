@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="手搓自研打字机 （现在这个是主力军）6月13日晚上已完成对接插口"
+config/name="手搓自研打字机 （现在这个是主力军）6月14日完成虎符合璧"
 run/main_scene="uid://cjnsuqg5xl3uj"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"

@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://op6qmkjr4a3v"]
+
+[ext_resource type="Script" uid="uid://d24bf4ewmqmpg" path="res://对象/NPC基类/npc_data.gd" id="1_cr0d2"]
+[ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="2_tjja2"]
+[ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="3_28jrh"]
+[ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="4_mauvm"]
+[ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="5_8hcex"]
+[ext_resource type="Texture2D" uid="uid://cylf12uts43rn" path="res://素材/spr_flowey_0-Sheet.png" id="6_p2amd"]
+
+[sub_resource type="Resource" id="Resource_nasu4"]
+script = ExtResource("3_28jrh")
+content = "*这是对话的选项测试！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_82j7n"]
+script = ExtResource("3_28jrh")
+content = "*选一个吧！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_ki2wa"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_nasu4"), SubResource("Resource_82j7n")])
+id = "choice0"
+next_id = "choice1"
+choices = Array[String](["choice2", "choice3", "choice4", "choice5"])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_f7ecs"]
+script = ExtResource("3_28jrh")
+content = "*第一个选项！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_gg6m8"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_f7ecs")])
+id = "choice2"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_wmx0v"]
+script = ExtResource("3_28jrh")
+content = "*第二个选项！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_tc4wi"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_wmx0v")])
+id = "choice3"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_fepao"]
+script = ExtResource("3_28jrh")
+content = "*第三个选项！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_kdkpp"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_fepao")])
+id = "choice4"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_e7xmy"]
+script = ExtResource("3_28jrh")
+content = "*第四个选项！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_m0apc"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_e7xmy")])
+id = "choice5"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_u1a2t"]
+script = ExtResource("3_28jrh")
+content = "*好了，你选完了，应该没问题！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_cajb0"]
+script = ExtResource("2_tjja2")
+dialogue_list = Array[ExtResource("3_28jrh")]([SubResource("Resource_u1a2t")])
+id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
+size = Vector2(19.72243, 21.083233)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
+size = Vector2(22, 14)
+
+[node name="NPC" type="StaticBody2D" unique_id=666820554]
+script = ExtResource("1_cr0d2")
+dialogue_groups = Array[ExtResource("2_tjja2")]([SubResource("Resource_ki2wa"), SubResource("Resource_gg6m8"), SubResource("Resource_tc4wi"), SubResource("Resource_kdkpp"), SubResource("Resource_m0apc"), SubResource("Resource_cajb0")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1979832529]
+texture_filter = 1
+position = Vector2(-1.9073486e-06, -1)
+scale = Vector2(0.52173907, 0.6086956)
+texture = ExtResource("6_p2amd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
+position = Vector2(-5.2154064e-07, -1)
+scale = Vector2(1.1154813, 0.6640347)
+shape = SubResource("RectangleShape2D_trlyu")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1872116843]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1652434430]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_x7mpe")

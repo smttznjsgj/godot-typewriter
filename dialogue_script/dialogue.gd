@@ -10,8 +10,6 @@ class_name Dialogue
 @export_group("Normal")
 @export var character_name : String
 @export var show_on_left : bool
-
-
 @export_group("Advanced")
 @export var effect_sound: AudioStream
 @export var typing_speed : float = 0.05

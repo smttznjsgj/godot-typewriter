@@ -92,6 +92,45 @@ layout_mode = 2
 texture = ExtResource("3_yjy76")
 stretch_mode = 5
 
+[node name="Choicecontainer" type="Control" parent="container" unique_id=149372730]
+z_index = 100
+y_sort_enabled = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Choice1" type="Button" parent="container/Choicecontainer" unique_id=1738839866]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 531.0
+offset_right = 631.0
+offset_bottom = 539.0
+text = "AAAAAAA"
+
+[node name="Choice2" type="Button" parent="container/Choicecontainer" unique_id=1142694919]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 568.0
+offset_right = 302.0
+offset_bottom = 599.0
+text = "BBBBBBBBB"
+
+[node name="Choice3" type="Button" parent="container/Choicecontainer" unique_id=1367213803]
+layout_mode = 0
+offset_left = 527.0
+offset_top = 614.0
+offset_right = 644.0
+offset_bottom = 641.0
+text = "CCCCCCCCC"
+
+[node name="Choice4" type="Button" parent="container/Choicecontainer" unique_id=1350976087]
+layout_mode = 0
+offset_left = 780.0
+offset_top = 565.0
+offset_right = 929.0
+offset_bottom = 596.0
+text = "DDDDDDDDDDDD"
+
 [node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=397426411]
 
 [node name="ShakeAudio" type="AudioStreamPlayer" parent="." unique_id=1792572245]

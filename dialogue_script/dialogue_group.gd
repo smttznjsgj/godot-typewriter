@@ -8,3 +8,6 @@ class_name DialogueGroup
 @export_group("Flags and Event")
 @export var require_flag: String = ""
 @export var set_flag: String = ""
+@export_group("Choices")
+@export var choices: Array[String] = []
+@export var choice_next_ids: Array[String] = []

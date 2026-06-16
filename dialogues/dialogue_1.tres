@@ -8,40 +8,40 @@
 
 [sub_resource type="Resource" id="Resource_to5ph"]
 script = ExtResource("1_alwde")
-character_name = "sf"
 content = "hello? aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 avatar = ExtResource("2_eb70w")
+character_name = "sf"
 show_on_left = true
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_xwj14"]
 script = ExtResource("1_alwde")
-character_name = "sf"
 content = "ok"
 avatar = ExtResource("2_eb70w")
+character_name = "sf"
 show_on_left = true
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_ogti4"]
 script = ExtResource("1_alwde")
-character_name = "et"
 content = "fine"
 avatar = ExtResource("2_eb70w")
+character_name = "et"
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_rso1t"]
 script = ExtResource("1_alwde")
-character_name = "sf"
 content = "byebye"
 avatar = ExtResource("2_eb70w")
+character_name = "sf"
 show_on_left = true
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [sub_resource type="Resource" id="Resource_xwj13"]
 script = ExtResource("1_alwde")
-character_name = "et"
 content = "byebye"
 avatar = ExtResource("2_eb70w")
+character_name = "et"
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
 [resource]

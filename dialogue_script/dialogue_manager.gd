@@ -13,8 +13,13 @@ extends Control
 @onready var container: Control = $container
 
 @onready var shake_audio: AudioStreamPlayer = $ShakeAudio
-
-
+@onready var choice_buttons: Array[Button] = [
+	$container/Choicecontainer/Choice1,
+	$container/Choicecontainer/Choice2,
+	$container/Choicecontainer/Choice3,
+	$container/Choicecontainer/Choice4
+]
+var choices_active: bool = false
 
 @export_group("dialogue")
 @export var main_dialogue :DialogueGroup
@@ -23,6 +28,7 @@ extends Control
 
 
 signal dialogue_finished
+signal dialogue_continue#给选项功能用的
 
 var default_typing_sound : AudioStream = preload("res://素材/声音/SND_TXT1.wav")
 var current_typing_sound : AudioStream
@@ -49,19 +55,27 @@ func display_next_dialogue() -> void:
 		settle.tween_callback(display_next_dialogue)
 		return
 	
+	#if dialogue_index >= len(main_dialogue.dialogue_list):
+		#if effect_tween and effect_tween.is_running():
+			#effect_tween.kill()
+		#persistent_effect_running = false
+		#container.position = Vector2.ZERO
+		#container.rotation_degrees = 0.0
+		#Global.can_act = true
+		#visible = false
+		#Global.set_flag(main_dialogue.set_flag)
+		#Global.dialogue_broadcast.emit(main_dialogue.next_id)
+		#dialogue_finished.emit()
+		#return万一改错了用这个
+	
 	if dialogue_index >= len(main_dialogue.dialogue_list):
 		if effect_tween and effect_tween.is_running():
 			effect_tween.kill()
-		persistent_effect_running = false
-		container.position = Vector2.ZERO
-		container.rotation_degrees = 0.0
-		Global.can_act = true
-		visible = false
-		Global.set_flag(main_dialogue.set_flag)
-		Global.dialogue_broadcast.emit(main_dialogue.next_id)
-		dialogue_finished.emit()
+		if not main_dialogue.choices.is_empty():
+			_show_choices(main_dialogue)
+			return
+		_finish_dialogue()
 		return
-	
 	var dialogue := main_dialogue.dialogue_list[dialogue_index]
 	var processed_content = dialogue.content.replace("{name}", Global.player.player_name)
 	
@@ -157,8 +171,60 @@ func display_next_dialogue() -> void:
 			right_avatar.texture = dialogue.avatar
 			left_avatar.texture = null
 			
-	
+	#
+#func _finish_dialogue() -> void:
+	#persistent_effect_running = false
+	#container.position = Vector2.ZERO
+	#container.rotation_degrees = 0.0
+	#Global.set_flag(main_dialogue.set_flag)
+	#Global.dialogue_broadcast.emit(main_dialogue.next_id)
+	#Global.can_act = true
+	#visible = false
+	#dialogue_finished.emit()
 
+func _finish_dialogue(skip_broadcast: bool = false) -> void:
+	persistent_effect_running = false
+	container.position = Vector2.ZERO
+	container.rotation_degrees = 0.0
+	Global.set_flag(main_dialogue.set_flag)
+	if not skip_broadcast:
+		Global.dialogue_broadcast.emit(main_dialogue.next_id)
+	Global.can_act = true
+	visible = false
+	dialogue_finished.emit()
+func _show_choices(group: DialogueGroup) -> void:
+	text_box.text = ""
+	choices_active = true
+	for i in choice_buttons.size():
+		if i < group.choices.size() and group.choices[i] != "":
+			choice_buttons[i].text = group.choices[i]
+			choice_buttons[i].visible = true
+		else:
+			choice_buttons[i].visible = false
+
+func _hide_choices() -> void:
+	for btn in choice_buttons:
+		btn.visible = false
+func _on_choice_pressed(index: int) -> void:
+	_hide_choices()
+	choices_active = false
+	var group := main_dialogue
+	Global.set_flag(group.set_flag)
+	if index < group.choice_next_ids.size() and group.choice_next_ids[index] != "":
+		Global.dialogue_broadcast.emit(group.choice_next_ids[index])
+	dialogue_continue.emit()
+#func _on_choice_pressed(index: int) -> void:
+	#_hide_choices()
+	#choices_active = false
+	#var group := main_dialogue
+	#Global.set_flag(group.set_flag)
+	#var next_id_to_broadcast := ""
+	#if index < group.choice_next_ids.size():
+		#next_id_to_broadcast = group.choice_next_ids[index]
+	#if next_id_to_broadcast != "":
+		#Global.dialogue_broadcast.emit(next_id_to_broadcast)
+	#
+	#_finish_dialogue(true)
 func append_character(character : String)-> void:
 	if typing_tween == null:
 		return
@@ -173,7 +239,9 @@ func append_character(character : String)-> void:
 func _ready() -> void:
 	visible = false
 	current_typing_sound = default_typing_sound
-	
+	for btn in choice_buttons:
+		btn.visible = false
+		btn.pressed.connect(_on_choice_pressed.bind(choice_buttons.find(btn)))
 	
 func start_dialogue(group: DialogueGroup) -> void:
 	if typing_tween and typing_tween.is_running():
@@ -211,9 +279,11 @@ func start_dialogue(group: DialogueGroup) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
+	if choices_active:
+		return
 	if event.is_action_pressed("interact"):
 		display_next_dialogue()
-
+	
 
 #kkk
 

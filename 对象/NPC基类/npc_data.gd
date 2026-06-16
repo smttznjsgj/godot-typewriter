@@ -22,11 +22,14 @@ func interact() -> void:
 	if group:
 		DialogueUI.start_dialogue(group)
 		DialogueUI.dialogue_finished.connect(_on_dialogue_finished, CONNECT_ONE_SHOT)
-
+		DialogueUI.dialogue_continue.connect(_on_dialogue_continue, CONNECT_ONE_SHOT)
 func _on_dialogue_finished() -> void:
-	pass
-
-
+	if DialogueUI.dialogue_continue.is_connected(_on_dialogue_continue):
+		DialogueUI.dialogue_continue.disconnect(_on_dialogue_continue)
+func _on_dialogue_continue() -> void:
+	var group := _find_group(current_group_id)
+	if group:
+		DialogueUI.start_dialogue(group)
 #func _on_dialogue_finished() -> void:
 	#var finished := _find_group(current_group_id)
 	#if finished and finished.next_id != "":
