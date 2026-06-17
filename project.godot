@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="手搓自研打字机 （现在这个是主力军）6月14日完成虎符合璧"
+config/name="手搓自研打字机 6.16日完成选项系统，待做选项系统美化"
 run/main_scene="uid://cjnsuqg5xl3uj"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -25,7 +25,12 @@ Global="*uid://ckh6730jdqbqm"
 
 [display]
 
+window/size/viewport_width=960
+window/size/viewport_height=640
+window/size/borderless=true
 window/size/always_on_top=true
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 

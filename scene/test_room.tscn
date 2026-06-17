@@ -4,12 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://duwmhj8ejc8pi" path="res://对象/NPC们/npc1.tscn" id="2_8gahd"]
 [ext_resource type="PackedScene" uid="uid://o7hhieffmau4" path="res://对象/NPC们/npc3.tscn" id="3_hhrv1"]
 [ext_resource type="PackedScene" uid="uid://b436ecifecyi4" path="res://对象/NPC们/npc2.tscn" id="4_hhrv1"]
+[ext_resource type="AudioStream" uid="uid://c3vhggn8ytgpw" path="res://素材/声音/snd_select.wav" id="4_jl3h3"]
 [ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="4_xg7ot"]
 [ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="5_j4i0s"]
+[ext_resource type="AudioStream" uid="uid://cxyfuntp5ia6k" path="res://素材/声音/snd_squeak.wav" id="5_vcrkc"]
 [ext_resource type="Texture2D" uid="uid://dgrvir4pk5c7s" path="res://素材/spr_chestbox_0.png" id="6_j4i0s"]
 [ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="6_sbee0"]
 [ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="7_eel6g"]
 [ext_resource type="PackedScene" uid="uid://op6qmkjr4a3v" path="res://对象/NPC们/npc_choice_test.tscn" id="10_sbee0"]
+[ext_resource type="Resource" uid="uid://qbtkfgw5kgju" path="res://dialogues/四个选项的对话.tres" id="11_eel6g"]
 
 [sub_resource type="Resource" id="Resource_psmef"]
 script = ExtResource("5_j4i0s")
@@ -52,10 +55,18 @@ script = ExtResource("5_j4i0s")
 content = "*小花打开了这个箱子！"
 metadata/_custom_type_script = "uid://c06clw1acxak"
 
+[sub_resource type="Resource" id="Resource_qu6x3"]
+script = ExtResource("5_j4i0s")
+content = "*你已经查看了箱子，现在可以回去告诉小花了！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
 [sub_resource type="Resource" id="Resource_70euv"]
 script = ExtResource("4_xg7ot")
-dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_26vsw")])
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_26vsw"), SubResource("Resource_qu6x3")])
 id = "box"
+next_id = "saw_box"
+require_flag = "boxopen"
+set_flag = "box_checked"
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="Resource" id="Resource_886wu"]
@@ -203,25 +214,6 @@ id = "A4"
 require_flag = "be friend1,be friend2"
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
-[sub_resource type="Resource" id="Resource_nasu4"]
-script = ExtResource("5_j4i0s")
-content = "*这是对话的选项测试！"
-metadata/_custom_type_script = "uid://c06clw1acxak"
-
-[sub_resource type="Resource" id="Resource_82j7n"]
-script = ExtResource("5_j4i0s")
-content = "*选一个吧！"
-metadata/_custom_type_script = "uid://c06clw1acxak"
-
-[sub_resource type="Resource" id="Resource_pppdl"]
-script = ExtResource("4_xg7ot")
-dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_nasu4"), SubResource("Resource_82j7n")])
-id = "choice0"
-next_id = "choice1"
-choices = Array[String](["choice1", "choice2", "choice3", "choice4"])
-choice_next_ids = Array[String](["choice1", "choice2", "choice3", "choice4"])
-metadata/_custom_type_script = "uid://br0sgnpurqem5"
-
 [sub_resource type="Resource" id="Resource_f7ecs"]
 script = ExtResource("5_j4i0s")
 content = "*第一个选项！"
@@ -282,6 +274,113 @@ dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_u1a2t")])
 id = "end"
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
+[sub_resource type="Resource" id="Resource_pppdl"]
+script = ExtResource("5_j4i0s")
+content = "*这是对话的选项测试！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_vu4bj"]
+script = ExtResource("5_j4i0s")
+content = "*选一个吧！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_nilh7"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_pppdl"), SubResource("Resource_vu4bj")])
+id = "choice0"
+next_id = "nochoice"
+choices = Array[String](["choice1", "choice2", "choice3", "这个对话会打开箱子"])
+choice_next_ids = Array[String](["choice1", "choice2", "choice3", "choice4"])
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_v5ujg"]
+script = ExtResource("5_j4i0s")
+content = "*第一个选项！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_w1msd"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_v5ujg")])
+id = "choice1"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_knady"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_wmx0v")])
+id = "choice2"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_57p84"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_fepao")])
+id = "choice3"
+next_id = "end"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_stlnt"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_e7xmy")])
+id = "choice4"
+next_id = "box"
+set_flag = "boxopen"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_i84wo"]
+script = ExtResource("5_j4i0s")
+content = "*好了，你选完了，应该没问题！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_ls3ov"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_i84wo")])
+id = "end"
+next_id = "choice0"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_g21gs"]
+script = ExtResource("5_j4i0s")
+content = "*你特么倒是选啊！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_5ikii"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_g21gs")])
+id = "nochoice"
+next_id = "choice0"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_60srg"]
+script = ExtResource("5_j4i0s")
+content = "*去那个箱子看看！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_a7l3b"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_60srg")])
+id = "box"
+next_id = "saw_box"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
+[sub_resource type="Resource" id="Resource_eklpn"]
+script = ExtResource("5_j4i0s")
+content = "*只有你查看了箱子，我才会说这一句！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_7jw3r"]
+script = ExtResource("5_j4i0s")
+content = "*这就是选项系统的魅力！"
+metadata/_custom_type_script = "uid://c06clw1acxak"
+
+[sub_resource type="Resource" id="Resource_x5572"]
+script = ExtResource("4_xg7ot")
+dialogue_list = Array[ExtResource("5_j4i0s")]([SubResource("Resource_eklpn"), SubResource("Resource_7jw3r")])
+id = "saw_box"
+next_id = "choice0"
+require_flag = "box_checked"
+metadata/_custom_type_script = "uid://br0sgnpurqem5"
+
 [node name="Node2D" type="Node2D" unique_id=1019973989]
 
 [node name="Player" parent="." unique_id=1997236098 instance=ExtResource("1_ton2f")]
@@ -305,7 +404,12 @@ dialogue_groups = Array[ExtResource("4_xg7ot")]([SubResource("Resource_8s16s"), 
 [node name="冰箱" parent="." unique_id=1446510662 instance=ExtResource("4_hhrv1")]
 position = Vector2(442, 109)
 
-[node name="NPC" parent="." unique_id=446920957 instance=ExtResource("10_sbee0")]
+[node name="四个选项对话的测试" parent="." unique_id=446920957 instance=ExtResource("10_sbee0")]
 position = Vector2(245.00002, 187)
 scale = Vector2(3, 3)
-dialogue_groups = Array[ExtResource("4_xg7ot")]([SubResource("Resource_pppdl"), SubResource("Resource_b11wq"), SubResource("Resource_wvjs4"), SubResource("Resource_0ubw4"), SubResource("Resource_5dinp"), SubResource("Resource_2et4b")])
+dialogue_groups = Array[ExtResource("4_xg7ot")]([ExtResource("11_eel6g"), SubResource("Resource_b11wq"), SubResource("Resource_wvjs4"), SubResource("Resource_0ubw4"), SubResource("Resource_5dinp"), SubResource("Resource_2et4b")])
+
+[node name="两个选项对话测试" parent="." unique_id=806315091 instance=ExtResource("10_sbee0")]
+position = Vector2(244, 276)
+scale = Vector2(3, 3)
+dialogue_groups = Array[ExtResource("4_xg7ot")]([SubResource("Resource_nilh7"), SubResource("Resource_w1msd"), SubResource("Resource_knady"), SubResource("Resource_57p84"), SubResource("Resource_stlnt"), SubResource("Resource_ls3ov"), SubResource("Resource_5ikii"), SubResource("Resource_a7l3b"), SubResource("Resource_x5572")])

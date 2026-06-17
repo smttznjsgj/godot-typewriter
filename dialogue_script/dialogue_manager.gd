@@ -13,13 +13,20 @@ extends Control
 @onready var container: Control = $container
 
 @onready var shake_audio: AudioStreamPlayer = $ShakeAudio
-@onready var choice_buttons: Array[Button] = [
-	$container/Choicecontainer/Choice1,
-	$container/Choicecontainer/Choice2,
-	$container/Choicecontainer/Choice3,
-	$container/Choicecontainer/Choice4
+@onready var choice_audio: AudioStreamPlayer = $ChoiceAudio
+@onready var choice_items: Array[ChoiceItem] = [
+	$container/Choicecontainer/Item0,
+	$container/Choicecontainer/Item1,
+	$container/Choicecontainer/Item2,
+	$container/Choicecontainer/Item3
 ]
+@onready var choice_marker: Control = $container/Choicecontainer/Marker
+
 var choices_active: bool = false
+var current_choice_index: int = 0
+var choices_first_nav: bool = true
+var heart_tween: Tween
+@export var heart_move_duration: float = 0.08
 
 @export_group("dialogue")
 @export var main_dialogue :DialogueGroup
@@ -195,24 +202,130 @@ func _finish_dialogue(skip_broadcast: bool = false) -> void:
 func _show_choices(group: DialogueGroup) -> void:
 	text_box.text = ""
 	choices_active = true
-	for i in choice_buttons.size():
+
+	for i in choice_items.size():
 		if i < group.choices.size() and group.choices[i] != "":
-			choice_buttons[i].text = group.choices[i]
-			choice_buttons[i].visible = true
+			choice_items[i].set_text(group.choices[i])
+			choice_items[i].visible = true
 		else:
-			choice_buttons[i].visible = false
+			choice_items[i].visible = false
+
+	# 选一个可见项做初始选中：离 marker 最近的
+	current_choice_index = 0
+	var best_dist := INF
+	var marker_center := _get_marker_center()
+	for i in choice_items.size():
+		if choice_items[i].visible:
+			var d := choice_items[i].get_center().distance_to(marker_center)
+			if d < best_dist:
+				best_dist = d
+				current_choice_index = i
+
+	# 数可见项：单选项直接出红心，多项等第一次导航
+	var visible_count := 0
+	for item in choice_items:
+		if item.visible:
+			visible_count += 1
+	if visible_count <= 1:
+		choices_first_nav = false
+		_place_heart_on(choice_items[current_choice_index])
+		choice_items[current_choice_index].set_selected(true)
+	else:
+		choices_first_nav = true
+
+func _get_marker_center() -> Vector2:
+	return choice_marker.global_position + choice_marker.size / 2.0
 
 func _hide_choices() -> void:
-	for btn in choice_buttons:
-		btn.visible = false
-func _on_choice_pressed(index: int) -> void:
+	for item in choice_items:
+		item.visible = false
+		item.set_selected(false)
+func _confirm_choice() -> void:
+	var group := main_dialogue
+	# 空白确认：从未导航就按了回车 → 走 next_id 惩罚对话
+	if choices_first_nav and group.next_id != "":
+		_hide_choices()
+		choices_active = false
+		Global.set_flag(group.set_flag)
+		Global.dialogue_broadcast.emit(group.next_id)
+		dialogue_continue.emit()
+		return
+	var index := current_choice_index
 	_hide_choices()
 	choices_active = false
-	var group := main_dialogue
+	choice_audio.stream = main_dialogue.choice_confirm_sound
+	choice_audio.play()
 	Global.set_flag(group.set_flag)
 	if index < group.choice_next_ids.size() and group.choice_next_ids[index] != "":
 		Global.dialogue_broadcast.emit(group.choice_next_ids[index])
 	dialogue_continue.emit()
+func _place_heart_on(item: ChoiceItem) -> void:
+	# Heart 绝对定位到该项文字左侧
+	var hw := item.heart.size.x
+	item.heart.position = Vector2(item.label.position.x - hw - 8.0, item.label.position.y + item.label.size.y / 2.0 - item.heart.size.y / 2.0)
+func _update_heart_position(target: ChoiceItem) -> void:
+	if heart_tween and heart_tween.is_running():
+		heart_tween.kill()
+	if heart_move_duration <= 0.0:
+		_place_heart_on(target)
+	else:
+		var from_pos := Vector2(target.heart.position)
+		_place_heart_on(target)  # 先算好目标位置
+		var to_pos := Vector2(target.heart.position)
+		target.heart.position = from_pos
+		heart_tween = create_tween()
+		heart_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUINT)
+		heart_tween.tween_property(target.heart, "position", to_pos, heart_move_duration)
+func _navigate_direction(direction: Vector2) -> void:
+	var current := choice_items[current_choice_index]
+	var cur_center := current.get_center()
+
+	var best_index := -1
+	var best_score := -INF
+
+	for i in choice_items.size():
+		if not choice_items[i].visible or i == current_choice_index:
+			continue
+		var target_center := choice_items[i].get_center()
+		var delta := target_center - cur_center
+		var dist := delta.length()
+		if dist < 0.01:
+			continue
+
+		var dir_norm := delta.normalized()
+		var dot_result := dir_norm.dot(direction)
+
+		if dot_result <= 0.0:
+			continue
+
+		var score := dot_result - dist * 0.0001
+		if score > best_score:
+			best_score = score
+			best_index = i
+
+	if best_index != -1:
+		if choices_first_nav:
+			choices_first_nav = false
+			current_choice_index = best_index
+			_place_heart_on(choice_items[current_choice_index])
+			choice_items[current_choice_index].set_selected(true)
+		else:
+			var old := choice_items[current_choice_index]
+			old.set_selected(false)
+			current_choice_index = best_index
+			var next_item := choice_items[current_choice_index]
+			_update_heart_position(next_item)
+			next_item.set_selected(true)
+		choice_audio.stream = main_dialogue.choice_switch_sound
+		choice_audio.play()
+	elif choices_first_nav:
+		# 方向无候选但红心未出 → 直接在当前项上显示
+		choices_first_nav = false
+		_place_heart_on(choice_items[current_choice_index])
+		choice_items[current_choice_index].set_selected(true)
+		choice_audio.stream = main_dialogue.choice_switch_sound
+		choice_audio.play()
+
 #func _on_choice_pressed(index: int) -> void:
 	#_hide_choices()
 	#choices_active = false
@@ -239,9 +352,9 @@ func append_character(character : String)-> void:
 func _ready() -> void:
 	visible = false
 	current_typing_sound = default_typing_sound
-	for btn in choice_buttons:
-		btn.visible = false
-		btn.pressed.connect(_on_choice_pressed.bind(choice_buttons.find(btn)))
+	for item in choice_items:
+		item.visible = false
+		item.set_selected(false)
 	
 func start_dialogue(group: DialogueGroup) -> void:
 	if typing_tween and typing_tween.is_running():
@@ -256,6 +369,7 @@ func start_dialogue(group: DialogueGroup) -> void:
 	container.rotation_degrees = 0.0
 	main_dialogue = group
 	dialogue_index = 0
+	current_choice_index = 0
 	visible = true
 	Global.can_act = false
 	display_next_dialogue()
@@ -280,6 +394,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 	if choices_active:
+		if event.is_action_pressed("ui_left"):
+			_navigate_direction(Vector2.LEFT)
+		elif event.is_action_pressed("ui_right"):
+			_navigate_direction(Vector2.RIGHT)
+		elif event.is_action_pressed("ui_up"):
+			_navigate_direction(Vector2.UP)
+		elif event.is_action_pressed("ui_down"):
+			_navigate_direction(Vector2.DOWN)
+		elif event.is_action_pressed("interact"):
+			_confirm_choice()
 		return
 	if event.is_action_pressed("interact"):
 		display_next_dialogue()

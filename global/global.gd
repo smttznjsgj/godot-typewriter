@@ -9,6 +9,10 @@ var flags: Dictionary = {}
 
 func _ready() -> void:
 	player = preload("res://player/player_data.tres")
+	_setup_window.call_deferred()
+
+func _setup_window() -> void:
+	get_window().min_size = Vector2i(800, 500)
 
 func set_flag(flag_name: String) -> void:
 	if flag_name != "":

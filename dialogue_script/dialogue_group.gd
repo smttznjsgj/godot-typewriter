@@ -11,3 +11,5 @@ class_name DialogueGroup
 @export_group("Choices")
 @export var choices: Array[String] = []
 @export var choice_next_ids: Array[String] = []
+@export var choice_switch_sound: AudioStream = preload("res://素材/声音/snd_squeak.wav")
+@export var choice_confirm_sound: AudioStream = preload("res://素材/声音/snd_select.wav")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c5pfse8y6x045" path="res://dialogue_script/dialogue_manager.gd" id="1_e78q0"]
 [ext_resource type="Resource" uid="uid://bayd3uyis8pdn" path="res://dialogues/dialogue_1.tres" id="2_lgx41"]
 [ext_resource type="Texture2D" uid="uid://cc86i26y1ivtk" path="res://icon.svg" id="3_yjy76"]
+[ext_resource type="PackedScene" uid="uid://dqku6dkv51lsp" path="res://dialogue_script/ChoiceItem.tscn" id="4_lgx41"]
 
 [node name="DialogueUI" type="Control" unique_id=783907447 node_paths=PackedStringArray("character_name_text", "text_box", "left_avatar", "right_avatar")]
 layout_mode = 3
@@ -29,10 +30,10 @@ grow_vertical = 2
 [node name="end_hint" type="Label" parent="container" unique_id=173851883]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 854.0
-offset_top = 611.0
-offset_right = 870.0
-offset_bottom = 634.0
+offset_left = 679.0
+offset_top = 613.0
+offset_right = 695.0
+offset_bottom = 636.0
 text = "▼"
 
 [node name="DialogueBox" type="HBoxContainer" parent="container" unique_id=1636331192]
@@ -95,44 +96,78 @@ stretch_mode = 5
 [node name="Choicecontainer" type="Control" parent="container" unique_id=149372730]
 z_index = 100
 y_sort_enabled = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Choice1" type="Button" parent="container/Choicecontainer" unique_id=1738839866]
-layout_mode = 0
-offset_left = 525.0
-offset_top = 531.0
-offset_right = 631.0
-offset_bottom = 539.0
-text = "AAAAAAA"
+[node name="Item0" parent="container/Choicecontainer" unique_id=175760902 instance=ExtResource("4_lgx41")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = 253.0
+offset_right = -212.0
+offset_bottom = 253.0
 
-[node name="Choice2" type="Button" parent="container/Choicecontainer" unique_id=1142694919]
-layout_mode = 0
-offset_left = 231.0
-offset_top = 568.0
-offset_right = 302.0
-offset_bottom = 599.0
-text = "BBBBBBBBB"
+[node name="Item1" parent="container/Choicecontainer" unique_id=627317585 instance=ExtResource("4_lgx41")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 97.0
+offset_top = 253.0
+offset_right = 97.0
+offset_bottom = 253.0
 
-[node name="Choice3" type="Button" parent="container/Choicecontainer" unique_id=1367213803]
-layout_mode = 0
-offset_left = 527.0
-offset_top = 614.0
-offset_right = 644.0
-offset_bottom = 641.0
-text = "CCCCCCCCC"
+[node name="Item2" parent="container/Choicecontainer" unique_id=1566616140 instance=ExtResource("4_lgx41")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 209.0
+offset_right = -56.0
+offset_bottom = 209.0
 
-[node name="Choice4" type="Button" parent="container/Choicecontainer" unique_id=1350976087]
-layout_mode = 0
-offset_left = 780.0
-offset_top = 565.0
-offset_right = 929.0
-offset_bottom = 596.0
-text = "DDDDDDDDDDDD"
+[node name="Item3" parent="container/Choicecontainer" unique_id=1968539110 instance=ExtResource("4_lgx41")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 290.0
+offset_right = -56.0
+offset_bottom = 290.0
+
+[node name="Marker" type="Control" parent="container/Choicecontainer" unique_id=1896810839]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.892
+anchor_right = 0.5
+anchor_bottom = 0.892
+offset_left = -56.0
+offset_top = -1.0159912
+offset_right = -56.0
+offset_bottom = -1.0159912
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=397426411]
 
 [node name="ShakeAudio" type="AudioStreamPlayer" parent="." unique_id=1792572245]
+
+[node name="ChoiceAudio" type="AudioStreamPlayer" parent="." unique_id=397426412]
 
 [connection signal="gui_input" from="container/DialogueBox/Panel/MarginContainer" to="." method="_on_click"]
