@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://d24bf4ewmqmpg" path="res://对象/NPC基类/npc_data.gd" id="1_u78lv"]
 [ext_resource type="Script" uid="uid://br0sgnpurqem5" path="res://dialogue_script/dialogue_group.gd" id="2_iywpx"]
 [ext_resource type="Texture2D" uid="uid://djm11car8a8dh" path="res://素材/spr_fridge_0.png" id="2_n2s4b"]
+[ext_resource type="AudioStream" uid="uid://c3vhggn8ytgpw" path="res://素材/声音/snd_select.wav" id="3_k7fs6"]
 [ext_resource type="Script" uid="uid://c06clw1acxak" path="res://dialogue_script/dialogue.gd" id="3_wm2pi"]
 [ext_resource type="Script" uid="uid://dldgg11dqgiaa" path="res://dialogue_script/effects_script/effect_data.gd" id="4_k7fs6"]
+[ext_resource type="AudioStream" uid="uid://cxyfuntp5ia6k" path="res://素材/声音/snd_squeak.wav" id="4_wlr05"]
 [ext_resource type="FontFile" uid="uid://bum4xw5voqfow" path="res://素材/Fonts/方正像素12.ttf" id="5_wlr05"]
 
 [sub_resource type="Resource" id="Resource_a0ya7"]
@@ -44,7 +46,7 @@ next_id = "a"
 metadata/_custom_type_script = "uid://br0sgnpurqem5"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trlyu"]
-size = Vector2(25.101274, 38.40161)
+size = Vector2(25.101274, 79.06213)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7mpe"]
 size = Vector2(30, 52.5)
@@ -59,7 +61,7 @@ texture_filter = 1
 texture = ExtResource("2_n2s4b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=43550759]
-position = Vector2(4.7683716e-07, -13.25)
+position = Vector2(4.7683716e-07, 0.24999905)
 scale = Vector2(1.1154813, 0.6640347)
 shape = SubResource("RectangleShape2D_trlyu")
 

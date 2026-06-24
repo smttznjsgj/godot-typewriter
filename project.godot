@@ -8,6 +8,10 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="手搓自研打字机 6.16日完成选项系统，待做选项系统美化"
@@ -30,7 +34,6 @@ window/size/viewport_height=640
 window/size/borderless=true
 window/size/always_on_top=true
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
 
 [editor_plugins]
 
